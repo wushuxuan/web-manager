@@ -8,6 +8,8 @@ import { LayoutFullScreenComponent } from '../layout/fullscreen/fullscreen.compo
 import { LayoutPassportComponent } from '../layout/passport/passport.component';
 // dashboard pages
 import { DashboardComponent } from './dashboard/dashboard.component';
+//HOME
+import { HomeComponent } from './home/home.component';
 // passport pages
 import { UserLoginComponent } from './passport/login/login.component';
 import { UserRegisterComponent } from './passport/register/register.component';
@@ -24,6 +26,7 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: DashboardComponent, data: { title: '仪表盘', titleI18n: 'dashboard' } },
+      { path: 'home', component: HomeComponent, data: { title: '仪表盘', titleI18n: 'home' } },
       { path: 'exception', loadChildren: () => import('./exception/exception.module').then(m => m.ExceptionModule) },
       // 业务子模块
       // { path: 'widgets', loadChildren: () => import('./widgets/widgets.module').then(m => m.WidgetsModule) },
