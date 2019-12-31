@@ -1,8 +1,10 @@
 <div class="alain-default__header-logo">
-  <a [routerLink]="['/']" class="alain-default__header-logo-link">
-    <img class="alain-default__header-logo-expanded" src="./assets/logo-full.svg" alt="{{settings.app.name}}" style="max-height:40px;" />
-    <img class="alain-default__header-logo-collapsed" src="./assets/logo.svg" alt="{{settings.app.name}}" style="max-height:30px;" />
-  </a>
+  <!-- <a [routerLink]="['/']" class="alain-default__header-logo-link">
+    <img class="alain-default__header-logo-expanded" src="./assets/logo-full.svg" alt="{{settings.app.name}}"
+      style="max-height:40px;" />
+    <img class="alain-default__header-logo-collapsed" src="./assets/logo.svg" alt="{{settings.app.name}}"
+      style="max-height:30px;" />
+  </a> -->
 </div>
 <div class="alain-default__nav-wrap">
   <ul class="alain-default__nav">
@@ -25,13 +27,13 @@
       </div>
     </li>
     <!-- Search Button -->
-    <li class="hidden-pc" (click)="searchToggleChange()">
+    <!-- <li class="hidden-pc" (click)="searchToggleChange()">
       <div class="alain-default__nav-item">
         <i nz-icon nzType="search"></i>
       </div>
-    </li>
+    </li> -->
   </ul>
-  <header-search class="alain-default__search" [toggleChange]="searchToggleStatus"></header-search>
+  <!-- <header-search class="alain-default__search" [toggleChange]="searchToggleStatus"></header-search> -->
   <ul class="alain-default__nav">
     <!-- Notify -->
     <li>
@@ -47,7 +49,8 @@
     </li>
     <!-- Settings -->
     <li class="hidden-mobile">
-      <div class="alain-default__nav-item" nz-dropdown [nzDropdownMenu]="settingsMenu" nzTrigger="click" nzPlacement="bottomRight">
+      <div class="alain-default__nav-item" nz-dropdown [nzDropdownMenu]="settingsMenu" nzTrigger="click"
+        nzPlacement="bottomRight">
         <i nz-icon nzType="setting"></i>
       </div>
       <nz-dropdown-menu #settingsMenu="nzDropdownMenu">
@@ -57,6 +60,9 @@
           </div>
           <div nz-menu-item>
             <header-storage></header-storage>
+          </div>
+          <div nz-menu-item>
+            <header-i18n></header-i18n>
           </div>
         </div>
       </nz-dropdown-menu>

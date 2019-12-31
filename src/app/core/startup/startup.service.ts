@@ -6,6 +6,8 @@ import { catchError } from 'rxjs/operators';
 import { MenuService, SettingsService, TitleService, ALAIN_I18N_TOKEN } from '@delon/theme';
 import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
 import { ACLService } from '@delon/acl';
+import { TranslateService } from '@ngx-translate/core';
+import { I18NService } from '../i18n/i18n.service';
 
 import { NzIconService } from 'ng-zorro-antd/icon';
 import { ICONS_AUTO } from '../../../style-icons-auto';
@@ -23,6 +25,8 @@ export class StartupService {
     private settingService: SettingsService,
     private aclService: ACLService,
     private titleService: TitleService,
+    private translate: TranslateService,
+    @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
     @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
     private httpClient: HttpClient,
     private injector: Injector
@@ -32,13 +36,16 @@ export class StartupService {
 
   private viaHttp(resolve: any, reject: any) {
     zip(
+      this.httpClient.get(`assets/tmp/i18n/${this.i18n.defaultLang}.json`),
       this.httpClient.get('assets/tmp/app-data.json')
     ).pipe(
-      catchError(([appData]) => {
-          resolve(null);
-          return [appData];
+      catchError(([langData, appData]) => {
+        resolve(null);
+        return [langData, appData];
       })
-    ).subscribe(([appData]) => {
+    ).subscribe(([langData, appData]) => {
+      this.translate.setTranslation(this.i18n.defaultLang, langData);
+      this.translate.setDefaultLang(this.i18n.defaultLang);
 
       // Application data
       const res: any = appData;
@@ -53,12 +60,12 @@ export class StartupService {
       // Can be set page suffix title, https://ng-alain.com/theme/title
       this.titleService.suffix = res.app.name;
     },
-    () => { },
-    () => {
-      resolve(null);
-    });
+      () => { },
+      () => {
+        resolve(null);
+      });
   }
-  
+
   private viaMock(resolve: any, reject: any) {
     // const tokenData = this.tokenService.get();
     // if (!tokenData.token) {
@@ -92,7 +99,15 @@ export class StartupService {
           {
             text: 'Dashboard',
             link: '/dashboard',
-            icon: { type: 'icon', value: 'appstore' }
+            icon: { type: 'icon', value: 'appstore' },
+            children: [
+              {
+                text: 'Home',
+                link: '/home',
+                icon: { type: 'icon', value: 'Home' },
+                shortcutRoot: true
+              }
+            ]
           },
           {
             text: 'Quick Menu',
